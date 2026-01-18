@@ -45,5 +45,18 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	
+	<!-- CAMERA -->
+	<key>NSCameraUsageDescription</key>
+	<string>Dunyya requires camera access for photo capture in profile.</string>
+
+	<!-- PHOTO LIBRARY -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Dunyya needs access to your photo library to upload images and documents.</string>
+
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Dunyya needs permission to save images to your gallery.</string>
+
 </dict>
 </plist>

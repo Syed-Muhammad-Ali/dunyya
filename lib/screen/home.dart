@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:dunyya/screen/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewClass extends StatefulWidget {
@@ -22,8 +23,21 @@ class _WebViewClassState extends State<WebViewClass> {
   void initState() {
     Future.delayed(const Duration(milliseconds: 5000), () {
       isloadingNotifier.value = false;
+      requestCamera();
     });
     super.initState();
+  }
+
+  Future requestCamera() async {
+    final status = await Permission.camera.request();
+    final granted = status.isGranted;
+    // if (!granted) {
+    //   _showPermissionDialog(
+    //     title: "Camera Permission Needed",
+    //     message: "Enable camera permission to use this feature.",
+    //   );
+    // }
+    // return granted;
   }
 
   Future<void> clearWebViewCache() async {
@@ -78,6 +92,16 @@ class _WebViewClassState extends State<WebViewClass> {
                         isPageLoadingNotifier.value = true;
                       }
                     },
+
+                    onHttpError: (error) {
+                      print("Error $error");
+                    },
+
+                    onNavigationRequest: (request) async {
+                      print('onNavigationRequest is ${request.url}');
+                      return await NavigationDecision.navigate;
+                    },
+
                     onPageFinished: (String url) {
                       if (isPageLoadingNotifier.value) {
                         isPageLoadingNotifier.value = false;
